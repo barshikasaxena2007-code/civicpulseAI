@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CivicPulse AI - Turning Citizen Voices into Community Priorities</title>
+  <meta name="description" content="AI for Digital Public Infrastructure & Governance: Aggregate citizen development requests and identify high-priority civic and infrastructure needs.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Screen reader skip link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Top Digital Public Infrastructure Trust Strip -->
+  <div class="gov-strip" role="region" aria-label="Initiative Banner">
+    <div class="container">
+      <div class="gov-strip-badge">
+        <span>🏛️</span>
+        <span>Track 1: AI for Digital Public Infrastructure &amp; Governance</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Site Header -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="navbar" aria-label="Main Navigation">
+        <a href="#home" class="brand-logo" aria-label="CivicPulse AI Home">
+          <div class="brand-icon">CP</div>
+          <div class="brand-text">
+            <span class="brand-title">CivicPulse <span>AI</span></span>
+            <span class="brand-subtitle">Public Infrastructure &amp; Priority Portal</span>
+          </div>
+        </a>
+
+        <button class="mobile-menu-btn" id="mobileMenuToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          ☰
+        </button>
+
+        <ul class="nav-links" id="navLinksList">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#report" class="nav-link">Citizen Request Form</a></li>
+          <li><a href="#dashboard" class="nav-link">Government Dashboard</a></li>
+          <li><a href="#issues-list" class="nav-link">Priority Issues List</a></li>
+          <li><a href="#report" class="nav-link nav-cta-btn">+ Citizen Request</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Page Content -->
+  <main id="main-content">
+
+    <!-- 1. LANDING PAGE / HERO SECTION -->
+    <section id="home" class="hero-section">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-pill">
+            <span>✨</span> Digital Public Infrastructure & Governance
+          </div>
+          <h1 class="hero-title">CivicPulse <span>AI</span></h1>
+          <p class="hero-tagline">"Turning Citizen Voices into Community Priorities"</p>
+          <p class="hero-description">
+            Traditional municipal grievance portals fail because citizen requests remain scattered and unranked. 
+            <strong>CivicPulse AI</strong> aggregates community development requests, evaluates urgency, population impact, and infrastructure risks, and calculates transparent, ranked priorities for city administrators.
+          </p>
+          
+          <div class="hero-actions">
+            <a href="#report" class="btn btn-primary" id="heroReportBtn">
+              <span>📢</span> Report a Community Issue
+            </a>
+            <a href="#dashboard" class="btn btn-secondary" id="heroViewPrioritiesBtn">
+              <span>📊</span> View Priorities
+            </a>
+          </div>
+
+          <!-- Problem and Solution Explanation Pillars -->
+          <div class="pillar-grid">
+            <div class="pillar-card">
+              <div class="pillar-icon">🗣️</div>
+              <h3 class="pillar-title">Direct Citizen Requests</h3>
+              <p class="pillar-text">
+                Citizens submit local infrastructure issues specifying affected households and severity to ensure no neighborhood is overlooked.
+              </p>
+            </div>
+            <div class="pillar-card">
+              <div class="pillar-icon">⚖️</div>
+              <h3 class="pillar-title">Transparent Priority Engine</h3>
+              <p class="pillar-text">
+                Priorities are calculated through objective rules based on urgency, people affected, and public health/safety risk.
+              </p>
+            </div>
+            <div class="pillar-card">
+              <div class="pillar-icon">🏛️</div>
+              <h3 class="pillar-title">Decision-Maker Hotspots</h3>
+              <p class="pillar-text">
+                Government teams instantly see demand hotspots and critical needs, directing municipal capital where it delivers maximum public impact.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. CITIZEN REQUEST FORM SECTION -->
+    <section id="report" class="section-padding report-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Citizen Participation</span>
+          <h2 class="section-title">Citizen Request Form</h2>
+          <p class="section-subtitle">
+            Submit an infrastructure or civic problem in your area. Your request will be evaluated using transparent rules and prioritized on the community dashboard.
+          </p>
+        </div>
+
+        <div class="report-container-grid">
+          <!-- Request Form Card -->
+          <div class="report-card">
+            <form id="citizenReportForm" novalidate>
+              
+              <!-- 1. Citizen Name (Optional) -->
+              <div class="form-group">
+                <label for="citizenName" class="form-label">
+                  Your Name <span style="font-weight: normal; color: #777777;">(Optional - leave blank to submit anonymously)</span>
+                </label>
+                <input type="text" id="citizenName" class="form-control" placeholder="e.g., Anita Sharma or Resident Assoc.">
+              </div>
+
+              <!-- 2. Location/Area & Category Row -->
+              <div class="form-row">
+                <!-- Location/Area Field -->
+                <div class="form-group">
+                  <label for="reportArea" class="form-label">
+                    Location / Area <span class="required-star" aria-hidden="true">*</span>
+                  </label>
+                  <select id="reportArea" class="form-control" required>
+                    <option value="" disabled selected>Select your Ward / Area</option>
+                    <!-- Populated dynamically by JS -->
+                  </select>
+                  <input type="text" id="customLocation" name="customLocation" class="form-control" style="display: none; margin-top: 8px;" placeholder="Enter your Area / Location e.g. Gomti Nagar, Lucknow">
+                  <div class="form-hint" id="areaHint">Administrative ward or custom neighborhood where the issue is situated</div>
+                </div>
+
+                <!-- Issue Category Field -->
+                <div class="form-group">
+                  <label for="reportCategory" class="form-label">
+                    Issue Category <span class="required-star" aria-hidden="true">*</span>
+                  </label>
+                  <select id="reportCategory" class="form-control" required>
+                    <option value="" disabled selected>Select issue category</option>
+                    <!-- Populated dynamically by JS -->
+                  </select>
+                  <input type="text" id="customCategory" name="customCategory" class="form-control" style="display: none; margin-top: 8px;" placeholder="Please specify your issue category e.g. Noise Pollution, Stray Dogs">
+                  <div class="form-hint">Type of infrastructure or civic service</div>
+                </div>
+              </div>
+
+              <!-- 3. People Affected & Urgency / Severity Row -->
+              <div class="form-row">
+                <!-- Number of People Affected Field -->
+                <div class="form-group">
+                  <label for="peopleAffected" class="form-label">
+                    Number of People Affected <span class="required-star" aria-hidden="true">*</span>
+                  </label>
+                  <input type="number" id="peopleAffected" class="form-control" min="1" max="100000" placeholder="e.g. 150" required>
+                  <div class="form-hint">Approximate residents, commuters, or households impacted</div>
+                </div>
+
+                <!-- Urgency / Severity Field -->
+                <div class="form-group">
+                  <label for="urgencySeverity" class="form-label">
+                    Urgency / Severity <span class="required-star" aria-hidden="true">*</span>
+                  </label>
+                  <select id="urgencySeverity" class="form-control" required>
+                    <option value="" disabled selected>Select severity level</option>
+                    <option value="Critical">Critical - Immediate Danger / Health Risk</option>
+                    <option value="High">High - Severe Daily Disruption</option>
+                    <option value="Medium">Medium - Moderate Inconvenience</option>
+                    <option value="Low">Low - Routine / Minor Maintenance</option>
+                  </select>
+                  <div class="form-hint">Assessment of threat to health, safety, or transit</div>
+                </div>
+              </div>
+
+              <!-- 4. Input Mode Switcher (Text Note & Live Voice Note) -->
+              <div class="form-group">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <label class="form-label" style="margin-bottom: 0;">
+                    Input Mode <span class="required-star" aria-hidden="true">*</span>
+                  </label>
+                  <!-- Language Selector -->
+                  <div style="display: flex; align-items: center; gap: 6px;">
+                    <span style="font-size: 12px; color: #666666;">Language:</span>
+                    <select id="reportLanguage" class="form-control" style="padding: 3px 8px; font-size: 12px; width: auto;">
+                      <!-- Populated dynamically by JS -->
+                    </select>
+                  </div>
+                </div>
+
+                <div class="input-type-switcher" role="tablist" aria-label="Input Mode Switcher">
+                  <button type="button" class="input-tab-btn active" id="tabText" role="tab" aria-selected="true" aria-controls="panelText">
+                    <span>✍️</span> Text Note
+                  </button>
+                  <button type="button" class="input-tab-btn" id="tabVoice" role="tab" aria-selected="false" aria-controls="panelVoice">
+                    <span>🎙️</span> Voice Note (Live)
+                  </button>
+                </div>
+
+                <!-- Text Mode Panel -->
+                <div id="panelText" class="input-panel active" role="tabpanel" aria-labelledby="tabText">
+                  <label for="reportDescription" class="form-label">
+                    Description of the Problem <span class="required-star" aria-hidden="true">*</span>
+                  </label>
+                  <textarea id="reportDescription" class="form-control" rows="4" 
+                    placeholder="Describe the issue clearly (e.g. 'Contaminated brownish tap water in Block 4 with chemical odor for 3 days; affecting 150 households and primary school children')." 
+                    maxlength="500" required></textarea>
+                  <div class="textarea-char-count">
+                    <span id="charCount">0</span> / 500 characters
+                  </div>
+                </div>
+
+                <!-- Voice Mode Panel (Live) -->
+                <div id="panelVoice" class="input-panel" role="tabpanel" aria-labelledby="tabVoice">
+                  <div class="placeholder-box" id="voiceSupportContainer" style="text-align: center;">
+                    <div class="voice-visualizer" aria-hidden="true" id="voiceVisualizer" style="display: none;">
+                      <div class="voice-bar"></div>
+                      <div class="voice-bar"></div>
+                      <div class="voice-bar"></div>
+                      <div class="voice-bar"></div>
+                      <div class="voice-bar"></div>
+                      <div class="voice-bar"></div>
+                      <div class="voice-bar"></div>
+                    </div>
+                    
+                    <button type="button" class="mic-placeholder-btn" id="voiceBtn" aria-label="Record voice note" style="margin-bottom: 15px; border-radius: 8px; width: auto; padding: 10px 20px; font-size: 16px;">
+                      🎙️ <span id="micBtnText">Click to Speak</span>
+                    </button>
+                    
+                    <div id="voiceUnsupportedMsg" style="display: none; color: #d9534f; font-size: 13px; margin-bottom: 10px;">
+                      Voice recognition is not supported in this browser. Please type the transcript below.
+                    </div>
+
+                    <div style="text-align: left;">
+                      <label for="voiceTranscript" class="form-label" style="font-size: 13px;">
+                        Live Voice Transcript <span class="required-star" aria-hidden="true">*</span>
+                      </label>
+                      <textarea id="voiceTranscript" class="form-control" rows="4" 
+                        placeholder="Your spoken words will appear here. You can also type manually..." 
+                        maxlength="500"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Submit Request Button -->
+              <button type="submit" class="btn btn-primary" id="submitReportBtn" style="width: 100%;">
+                <span>🚀</span> Submit Request
+              </button>
+            </form>
+          </div>
+
+          <!-- Guidelines Sidebar -->
+          <aside class="report-guide-card" aria-label="Transparent Priority Guide">
+            <h3 class="report-guide-title">
+              <span>⚖️</span> Transparent Priority Rules
+            </h3>
+            <p style="font-size: 13px; color: #555555; margin-bottom: 12px; line-height: 1.5;">
+              CivicPulse AI does <strong>not</strong> assign priorities arbitrarily. Our rule-based priority engine evaluates each request against three objective factors:
+            </p>
+            <ul class="guide-step-list">
+              <li class="guide-step-item">
+                <span class="step-num">1</span>
+                <div>
+                  <strong>Urgency/Severity:</strong> Critical threats to health and life receive top initial weighting.
+                </div>
+              </li>
+              <li class="guide-step-item">
+                <span class="step-num">2</span>
+                <div>
+                  <strong>People Affected:</strong> Issues affecting 200+ citizens receive greater priority than single-household concerns.
+                </div>
+              </li>
+              <li class="guide-step-item">
+                <span class="step-num">3</span>
+                <div>
+                  <strong>Category Impact:</strong> Drinking water and public safety take precedence over cosmetic maintenance.
+                </div>
+              </li>
+            </ul>
+            <div style="margin-top: 15px; padding: 10px; background: #ffffff; border: 1px solid #d1d9e6; border-radius: 6px; font-size: 12px; color: #666666;">
+              <strong>Note:</strong> Every submitted request immediately calculates its priority score and appears on the government dashboard.
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. GOVERNMENT DASHBOARD SECTION -->
+    <section id="dashboard" class="section-padding dashboard-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-badge">Government Decision-Maker Overview</span>
+          <h2 class="section-title">Government Dashboard</h2>
+          <p class="section-subtitle">
+            Synthesized civic intelligence showing aggregate citizen requests, high-priority emergencies, category leaders, and demand hotspots for resource allocation.
+          </p>
+        </div>
+
+        <!-- 4 KPI Summary Cards -->
+        <div class="kpi-grid">
+          <div class="kpi-card accent-blue">
+            <div class="kpi-header">
+              <span class="kpi-label">Total Citizen Requests</span>
+              <span class="kpi-icon">📋</span>
+            </div>
+            <div class="kpi-value" id="kpiTotalReports">Not Available</div>
+            <div class="kpi-trend" id="kpiCitizenVsDemoCount">
+              <span class="trend-badge-info">Live reports syncing...</span>
+            </div>
+            <div style="font-size: 12px; color: #555555; margin-top: 8px; border-top: 1px solid #eeeeee; padding-top: 8px;">
+              <span id="countPending">Not Available</span> Pending &bull; 
+              <span id="countInProgress">Not Available</span> In Progress &bull; 
+              <span id="countResolved">Not Available</span> Resolved
+            </div>
+          </div>
+
+          <!-- High Priority Requests -->
+          <div class="kpi-card accent-red">
+            <div class="kpi-header">
+              <span class="kpi-label">High-Priority Requests</span>
+              <span class="kpi-icon">🚨</span>
+            </div>
+            <div class="kpi-value" id="kpiHighPriority">Not Available</div>
+            <div class="kpi-trend">
+              <span class="trend-badge-up">Critical</span> Requires urgent administrative review
+            </div>
+          </div>
+
+          <!-- Most Reported Issue Category -->
+          <div class="kpi-card accent-teal">
+            <div class="kpi-header">
+              <span class="kpi-label">Most Reported Category</span>
+              <span class="kpi-icon">💧</span>
+            </div>
+            <div class="kpi-value" id="kpiMostReported" style="font-size: 18px; line-height: 1.3;">Not Available</div>
+            <div class="kpi-trend">
+              <span class="trend-badge-info" id="kpiMostReportedCount">Not Available</span>
+            </div>
+          </div>
+
+          <!-- Areas with Highest Number of Requests -->
+          <div class="kpi-card accent-amber">
+            <div class="kpi-header">
+              <span class="kpi-label">Highest Request Area</span>
+              <span class="kpi-icon">📍</span>
+            </div>
+            <div class="kpi-value" id="kpiMostAffected" style="font-size: 18px; line-height: 1.3;">Not Available</div>
+            <div class="kpi-trend">
+              <span class="trend-badge-info" id="kpiMostAffectedCount">Not Available</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ AREA DEVELOPMENT CONTEXT SECTION ═══ -->
+        <div style="margin-bottom: 25px;">
+          <!-- Section Header -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <h3 style="font-size: 17px; color: #1e3a8a; margin: 0 0 4px;">🏙️ Area Development Context</h3>
+              <p style="font-size: 13px; color: #64748b; margin: 0;">
+                Optional area context is shown for reference only and <strong>does not change report priority or hotspot ranking</strong>.
+              </p>
+            </div>
+            <span style="font-size: 11px; background: #fef3c7; color: #92400e; padding: 4px 10px; border-radius: 20px; font-weight: 700; border: 1px solid #fde68a; white-space: nowrap;">
+              ⚠️ Illustrative — not official government data
+            </span>
+          </div>
+
+          <!-- Score Formula Explanation -->
+          <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-size: 12px; color: #1e40af;">
+            <strong>📐 How hotspot ranking works:</strong>
+            <span style="color: #334155;">
+              &nbsp;Submitted affected people rank areas first; total submissions, unique issue clusters, and shared rule-based report priorities break ties.
+              Context values below are illustrative and never treated as verified risk evidence.
+            </span>
+          </div>
+
+          <!-- 3 Area Context Cards -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+
+            <!-- Card 1: Gomtinagar -->
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.06);">
+              <div style="background: linear-gradient(135deg, #1e3a8a, #2563eb); color: #fff; padding: 12px 16px;">
+                <div style="font-weight: 700; font-size: 15px; margin-bottom: 2px;">📍 Gomtinagar</div>
+                <div style="font-size: 11px; opacity: 0.85;">Lucknow · Central Ward</div>
+              </div>
+              <div style="padding: 14px;">
+                <!-- Demographics -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px;">
+                  <div style="text-align: center; background: #f0f9ff; border-radius: 6px; padding: 8px 4px;">
+                    <div style="font-size: 15px; font-weight: 700; color: #0369a1;">82.3k</div>
+                    <div style="font-size: 9px; color: #64748b; font-weight: 600; text-transform: uppercase;">Population</div>
+                  </div>
+                  <div style="text-align: center; background: #f0f9ff; border-radius: 6px; padding: 8px 4px;">
+                    <div style="font-size: 15px; font-weight: 700; color: #0369a1;">12.4k</div>
+                    <div style="font-size: 9px; color: #64748b; font-weight: 600; text-transform: uppercase;">/sq km</div>
+                  </div>
+                  <div style="text-align: center; background: #fefce8; border-radius: 6px; padding: 8px 4px; border: 1px solid #fde68a;">
+                    <div style="font-size: 15px; font-weight: 700; color: #b45309;">12%</div>
+                    <div style="font-size: 9px; color: #64748b; font-weight: 600; text-transform: uppercase;">Vulnerable</div>
+                  </div>
+                </div>
+                <!-- Infrastructure Indices -->
+                <div style="font-size: 10px; font-weight: 700; color: #374151; text-transform: uppercase; margin-bottom: 7px; letter-spacing: .4px;">🏗️ Infrastructure Indices (0–100)</div>
+                <div style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px;">
+                  <!-- Roads -->
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 11px; width: 80px; color: #374151; flex-shrink: 0;">🛣️ Roads</span>
+                    <div style="flex: 1; background: #e2e8f0; border-radius: 4px; height: 8px;">
+                      <div style="width: 86%; background: #22c55e; border-radius: 4px; height: 8px;"></div>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 700; color: #15803d; width: 28px; text-align: right;">86</span>
+                  </div>
+                  <!-- Water -->
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 11px; width: 80px; color: #374151; flex-shrink: 0;">💧 Water</span>
+                    <div style="flex: 1; background: #e2e8f0; border-radius: 4px; height: 8px;">
+                      <div style="width: 78%; background: #22c55e; border-radius: 4px; height: 8px;"></div>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 700; color: #15803d; width: 28px; text-align: right;">78</span>
+                  </div>
+                  <!-- Healthcare -->
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 11px; width: 80px; color: #374151; flex-shrink: 0;">🏥 Health</span>
+                    <div style="flex: 1; background: #e2e8f0; border-radius: 4px; height: 8px;">
+                      <div style="width: 72%; background: #eab308; border-radius: 4px; height: 8px;"></div>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 700; color: #a16207; width: 28px; text-align: right;">72</span>
+                  </div>
+                  <!-- Schools -->
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 11px; width: 80px; color: #374151; flex-shrink: 0;">🏫 Schools</span>
+                    <div style="flex: 1; background: #e2e8f0; border-radius: 4px; height: 8px;">
+                      <div style="width: 81%; background: #22c55e; border-radius: 4px; height: 8px;"></div>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 700; color: #15803d; width: 28px; text-align: right;">81</span>
+                  </div>
+                </div>
+                <!-- Planned Investment -->
+                <div style="background: #ecfdf5; border: 1px solid #6ee7b7; border-radius: 6px; padding: 8px 10px;">
+                  <div style="font-size: 10px; font-weight: 700; color: #065f46; margin-bottom: 3px;">📋 Planned Investment</div>
+                  <div style="font-size: 13px; font-weight: 700; color: #047857;">₹2.5 Cr</div>
+                  <div style="font-size: 10px; color: #064e3b;">Target: Q1 · Road &amp; drainage upgrade</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2: Hazratganj -->
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.06);">
+              <div style="background: linear-gradient(135deg, #065f46, #059669); color: #fff; padding: 12px 16px;">
+                <div style="font-weight: 700; font-size: 15px; margin-bottom: 2px;">📍 Hazratganj</div>
+                <div style="font-size: 11px; opacity: 0.85;">Lucknow · Commercial Core</div>
+              </div>
+              <div style="padding: 14px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px;">
+                  <div style="text-align: center; background: #f0fdf4; border-radius: 6px; padding: 8px 4px;">
+                    <div style="font-size: 15px; font-weight: 700; color: #065f46;">45.1k</div>
+                    <div style="font-size: 9px; color: #64748b; font-weight: 600; text-transform: uppercase;">Population</div>
+                  </div>
+                  <div style="text-align: center; background: #f0fdf4; border-radius: 6px; padding: 8px 4px;">
+                    <div style="font-size: 15px; font-weight: 700; color: #065f46;">18.2k</div>
+                    <div style="font-size: 9px; color: #64748b; font-weight: 600; text-transform: uppercase;">/sq km</div>
+                  </div>
+                  <div style="text-align: center; background: #ecfdf5; border-radius: 6px; padding: 8px 4px; border: 1px solid #6ee7b7;">
+                    <div style="font-size: 15px; font-weight: 700; color: #15803d;">8%</div>
+                    <div style="font-size: 9px; color: #64748b; font-weight: 600; text-transform: uppercase;">Vulnerable</div>
+                  </div>
+                </div>
+                <div style="font-size: 10px; font-weight: 700; color: #374151; text-transform: uppercase; margin-bottom: 7px; letter-spacing: .4px;">🏗️ Infrastructure Indices (0–100)</div>
+                <div style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 11px; width: 80px; color: #374151; flex-shrink: 0;">🛣️ Roads</span>
+                    <div style="flex: 1; background: #e2e8f0; border-radius: 4px; height: 8px;">
+                      <div style="width: 92%; background: #22c55e; border-radius: 4px; height: 8px;"></div>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 700; color: #15803d; width: 28px; text-align: right;">92</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 11px; width: 80px; color: #374151; flex-shrink: 0;">💧 Water</span>
+                    <div style="flex: 1; background: #e2e8f0; border-radius: 4px; height: 8px;">
+                      <div style="width: 84%; background: #22c55e; border-radius: 4px; height: 8px;"></div>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 700; color: #15803d; width: 28px; text-align: right;">84</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 11px; width: 80px; color: #374151; flex-shrink: 0;">🏥 Health</span>
+                    <div style="flex: 1; background: #e2e8f0; border-radius: 4px; height: 8px;">
+                      <div style="width: 89%; background: #22c55e; border-radius: 4px; height: 8px;"></div>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 700; color: #15803d; width: 28px; text-align: right;">89</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 11px; width: 80px; color: #374151; flex-shrink: 0;">🏫 Schools</span>
+                    <div style="flex: 1; background: #e2e8f0; border-radius: 4px; height: 8px;">
+                      <div style="width: 93%; background: #22c55e; border-radius: 4px; height: 8px;"></div>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 700; color: #15803d; width: 28px; text-align: right;">93</span>
+                  </div>
+                </div>
+                <div style="background: #ecfdf5; border: 1px solid #6ee7b7; border-radius: 6px; padding: 8px 10px;">
+                  <div style="font-size: 10px; font-weight: 700; color: #065f46; margin-bottom: 3px;">📋 Planned Investment</div>
+                  <div style="font-size: 13px; font-weight: 700; color: #047857;">₹1.2 Cr</div>
+                  <div style="font-size: 10px; color: #064e3b;">Target: Q2 · Smart streetlights pilot</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3: Alambagh -->
+            <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.06);">
+              <div style="background: linear-gradient(135deg, #7c2d12, #ea580c); color: #fff; padding: 12px 16px;">
+                <div style="font-weight: 700; font-size: 15px; margin-bottom: 2px;">📍 Alambagh</div>
+                <div style="font-size: 11px; opacity: 0.85;">Lucknow · South Zone</div>
+              </div>
+              <div style="padding: 14px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px;">
+                  <div style="text-align: center; background: #fff7ed; border-radius: 6px; padding: 8px 4px;">
+                    <div style="font-size: 15px; font-weight: 700; color: #c2410c;">67.9k</div>
+                    <div style="font-size: 9px; color: #64748b; font-weight: 600; text-transform: uppercase;">Population</div>
+                  </div>
+                  <div style="text-align: center; background: #fff7ed; border-radius: 6px; padding: 8px 4px;">
+                    <div style="font-size: 15px; font-weight: 700; color: #c2410c;">22.1k</div>
+                    <div style="font-size: 9px; color: #64748b; font-weight: 600; text-transform: uppercase;">/sq km</div>
+                  </div>
+                  <div style="text-align: center; background: #fef2f2; border-radius: 6px; padding: 8px 4px; border: 1px solid #fca5a5;">
+                    <div style="font-size: 15px; font-weight: 700; color: #dc2626;">19%</div>
+                    <div style="font-size: 9px; color: #64748b; font-weight: 600; text-transform: uppercase;">Vulnerable</div>
+                  </div>
+                </div>
+                <div style="font-size: 10px; font-weight: 700; color: #374151; text-transform: uppercase; margin-bottom: 7px; letter-spacing: .4px;">🏗️ Infrastructure Indices (0–100)</div>
+                <div style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 11px; width: 80px; color: #374151; flex-shrink: 0;">🛣️ Roads</span>
+                    <div style="flex: 1; background: #e2e8f0; border-radius: 4px; height: 8px;">
+                      <div style="width: 73%; background: #eab308; border-radius: 4px; height: 8px;"></div>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 700; color: #a16207; width: 28px; text-align: right;">73</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 11px; width: 80px; color: #374151; flex-shrink: 0;">💧 Water</span>
+                    <div style="flex: 1; background: #e2e8f0; border-radius: 4px; height: 8px;">
+                      <div style="width: 66%; background: #eab308; border-radius: 4px; height: 8px;"></div>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 700; color: #a16207; width: 28px; text-align: right;">66</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 11px; width: 80px; color: #374151; flex-shrink: 0;">🏥 Health</span>
+                    <div style="flex: 1; background: #e2e8f0; border-radius: 4px; height: 8px;">
+                      <div style="width: 58%; background: #ef4444; border-radius: 4px; height: 8px;"></div>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 700; color: #b91c1c; width: 28px; text-align: right;">58</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span style="font-size: 11px; width: 80px; color: #374151; flex-shrink: 0;">🏫 Schools</span>
+                    <div style="flex: 1; background: #e2e8f0; border-radius: 4px; height: 8px;">
+                      <div style="width: 64%; background: #eab308; border-radius: 4px; height: 8px;"></div>
+                    </div>
+                    <span style="font-size: 11px; font-weight: 700; color: #a16207; width: 28px; text-align: right;">64</span>
+                  </div>
+                </div>
+                <!-- Context Impact Note -->
+                <div style="background: #fef2f2; border: 1px solid #fca5a5; border-radius: 6px; padding: 8px 10px; margin-bottom: 10px;">
+                  <div style="font-size: 10px; font-weight: 700; color: #991b1b; margin-bottom: 3px;">⚠️ Context Impact on Score</div>
+                  <div style="font-size: 10px; color: #7f1d1d; line-height: 1.5;">Very High density (22.1k/km²) + 19% vulnerable + weak Health (58) → multiplier boosts hotspot rank significantly vs raw report count alone.</div>
+                </div>
+                <div style="background: #ecfdf5; border: 1px solid #6ee7b7; border-radius: 6px; padding: 8px 10px;">
+                  <div style="font-size: 10px; font-weight: 700; color: #065f46; margin-bottom: 3px;">📋 Planned Investment</div>
+                  <div style="font-size: 13px; font-weight: 700; color: #047857;">₹4 Cr</div>
+                  <div style="font-size: 10px; color: #064e3b;">Target: Q1 · Water &amp; healthcare infra boost</div>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- end 3-card grid -->
+        </div><!-- end Area Development Context -->
+
+        <!-- Basic Demand Hotspots Section -->
+        <div class="hotspots-card" style="background: #ffffff; border: 1px solid #dddddd; border-radius: 8px; padding: 20px; margin-bottom: 25px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 8px;">
+            <div>
+              <h3 style="font-size: 17px; color: #1e3a8a; margin-bottom: 4px;">🔥 Basic Demand Hotspots</h3>
+              <p style="font-size: 13px; color: #666666;">Geographical clusters with the highest concentration of community requests.</p>
+            </div>
+            <span style="font-size: 12px; background: #e8f0fe; color: #1e3a8a; padding: 4px 8px; border-radius: 4px; font-weight: bold;">
+              Live Updated
+            </span>
+          </div>
+          <div id="hotspotsContainer" class="hotspots-grid">
+            <!-- Populated dynamically by JS -->
+          </div>
+        </div>
+
+        <!-- Priority Severity Distribution Indicator -->
+        <div class="priority-distribution-card">
+          <div class="distribution-header">
+            <h3 class="distribution-title">Priority Severity Distribution</h3>
+            <div class="distribution-legend" style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
+              <span class="legend-item" style="white-space: nowrap; display: inline-flex; align-items: center; gap: 6px;"><span class="legend-dot dot-crit"></span> Critical (<span id="distCritCount">Not Available</span>)</span>
+              <span class="legend-item" style="white-space: nowrap; display: inline-flex; align-items: center; gap: 6px;"><span class="legend-dot dot-high"></span> High (<span id="distHighCount">Not Available</span>)</span>
+              <span class="legend-item" style="white-space: nowrap; display: inline-flex; align-items: center; gap: 6px;"><span class="legend-dot dot-med"></span> Medium (<span id="distMedCount">Not Available</span>)</span>
+              <span class="legend-item" style="white-space: nowrap; display: inline-flex; align-items: center; gap: 6px;"><span class="legend-dot dot-low"></span> Low (<span id="distLowCount">Not Available</span>)</span>
+            </div>
+          </div>
+          <div class="distribution-bar" role="progressbar" aria-label="Priority distribution bar">
+            <div class="bar-segment-crit" id="barSegmentCrit" style="width: 0%;" title="Critical Priority"></div>
+            <div class="bar-segment-high" id="barSegmentHigh" style="width: 0%;" title="High Priority"></div>
+            <div class="bar-segment-med" id="barSegmentMed" style="width: 0%;" title="Medium Priority"></div>
+            <div class="bar-segment-low" id="barSegmentLow" style="width: 0%;" title="Low Priority"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PRIORITY ISSUES LIST SECTION -->
+    <section id="issues-list" class="section-padding issues-section">
+      <div class="container">
+        <div class="section-header text-left">
+          <span class="section-badge">Ranked Community Agenda</span>
+          <h2 class="section-title">Priority Issues Dashboard</h2>
+          <p class="section-subtitle">
+            All submitted citizen requests evaluated and prioritized. Real citizen submissions are dynamically stored and highlighted alongside demo baseline data.
+          </p>
+        </div>
+
+        <!-- Search & Filter Controls -->
+        <div class="table-toolbar">
+          <!-- Search box -->
+          <div class="search-box-wrapper">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input type="search" id="issueSearchInput" class="search-input" 
+              placeholder="Search issue, keyword, area, or ID..." 
+              aria-label="Search community issues">
+          </div>
+
+          <!-- Priority, Area & Source Filters -->
+          <div class="filters-group">
+            <!-- Priority Filter -->
+            <select id="filterPrioritySelect" class="filter-select" aria-label="Filter by priority level">
+              <option value="all">All Priorities</option>
+              <option value="Critical">Critical Priority Only</option>
+              <option value="High">High Priority Only</option>
+              <option value="Medium">Medium Priority Only</option>
+              <option value="Low">Low Priority Only</option>
+            </select>
+
+            <!-- Area Filter -->
+            <select id="filterAreaSelect" class="filter-select" aria-label="Filter by area or ward">
+              <option value="all">All Wards / Areas</option>
+              <!-- Populated dynamically by JS -->
+            </select>
+          </div>
+        </div>
+
+        <!-- Dynamic Results Counter -->
+        <div class="results-meta" id="resultsCount">
+          Loading reports from Supabase...
+        </div>
+
+        <!-- Accessible Table of Citizen Requests -->
+        <div class="table-responsive">
+          <table class="issues-table" aria-label="Ranked Community Priority Issues">
+            <thead>
+              <tr>
+                <th scope="col" style="width: 50px;">#</th>
+                <th scope="col">Issue & Problem Description</th>
+                <th scope="col">Location</th>
+                <th scope="col">Category</th>
+                <th scope="col" style="text-align: center;">People Affected</th>
+                <th scope="col">Priority</th>
+                <th scope="col">Priority Reason</th>
+                <th scope="col">Source</th>
+                <th scope="col" style="text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="issuesTableBody">
+              <!-- Dynamically rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Empty state when search/filter matches 0 items -->
+        <div id="noResultsState" class="empty-state" style="display: none;">
+          <div class="empty-state-icon">🔎</div>
+          <h3 style="font-size: 16px; font-weight: bold; color: #333333; margin-bottom: 4px;">No matching priority requests found</h3>
+          <p>Try clearing your search query or changing your filters.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Issue Detail Modal Dialog -->
+  <div class="modal-overlay" id="issueModal" role="dialog" aria-modal="true" aria-labelledby="modalIssueTitle" tabindex="-1">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <div class="modal-badge-row">
+            <span id="modalPriorityBadge" class="badge-priority badge-priority-high">High</span>
+            <span id="modalCategoryBadge" class="badge-status">Category</span>
+            <span id="modalIdBadge" style="font-family: monospace; font-size: 12px; color: #777777;">#ID</span>
+          </div>
+          <h2 id="modalIssueTitle" class="modal-title">Issue Title</h2>
+        </div>
+        <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Close dialog">&times;</button>
+      </div>
+
+      <!-- Quick Metrics in Modal -->
+      <div class="modal-meta-grid">
+        <div>
+          <div class="meta-label">Submitted By</div>
+          <div id="modalCitizenName" class="meta-value">Anonymous Citizen</div>
+        </div>
+        <div>
+          <div class="meta-label">Location / Ward</div>
+          <div id="modalArea" class="meta-value">Ward 4 - North Sector</div>
+        </div>
+        <div>
+          <div class="meta-label">People Affected</div>
+          <div id="modalPeopleAffected" class="meta-value">👥 1,200 people</div>
+        </div>
+        <div>
+          <div class="meta-label">Severity Level</div>
+          <div id="modalSeverity" class="meta-value">Critical</div>
+        </div>
+        <div>
+          <div class="meta-label">Community Support</div>
+          <div id="modalCommunitySupport" class="meta-value">🤝 1</div>
+        </div>
+      </div>
+
+      <!-- Problem Description -->
+      <div style="margin-bottom: 15px;">
+        <h4 class="modal-section-title">Problem Description</h4>
+        <p id="modalDescription" style="font-size: 14px; color: #555555; line-height: 1.6;">
+          Detailed issue summary...
+        </p>
+      </div>
+
+      <!-- Priority Calculation Reason -->
+      <div style="background: #fff8e1; border: 1px solid #ffe082; padding: 12px; border-radius: 6px; margin-bottom: 15px;">
+        <div style="font-size: 12px; font-weight: bold; color: #b78103; text-transform: uppercase; margin-bottom: 4px;">
+          ⚖️ Transparent Priority Rationale
+        </div>
+        <p id="modalPriorityReason" style="font-size: 13px; color: #333333; font-weight: 500;">
+          Priority reason explanation...
+        </p>
+      </div>
+
+      <!-- Area Development Context -->
+      <div id="modalAreaContext" style="background: #fafafa; border: 1px solid #ddd; padding: 12px; border-radius: 6px; margin-bottom: 15px; display: none;">
+        <div style="font-size: 12px; font-weight: bold; color: #b7791f; text-transform: uppercase; margin-bottom: 6px;">
+          ⚠️ Area Development Context <span style="font-weight: normal; color: #777;">(Illustrative — not official government data)</span>
+        </div>
+        <div id="modalAreaContextContent" style="font-size: 12.5px; color: #444; display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+
+      <!-- Suggested Decision-Maker Action -->
+      <div class="action-recommendation-box">
+        <div class="action-recommendation-title">Recommended Municipal Action</div>
+        <p id="modalAction" class="action-recommendation-text">Action details...</p>
+      </div>
+
+      <!-- Admin Panel: Status Control -->
+      <div style="background: #eef2ff; border: 1px solid #c7d2fe; padding: 12px; border-radius: 6px; margin-bottom: 15px;">
+        <div style="font-size: 13px; font-weight: bold; color: #3730a3; margin-bottom: 8px;">
+          🛠️ Admin Panel: Update Status
+        </div>
+        <select id="modalStatusSelect" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #a5b4fc; font-size: 14px;">
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Resolved">Resolved</option>
+        </select>
+      </div>
+
+      <div style="text-align: right;">
+        <button type="button" class="btn btn-secondary" id="modalDismissBtn" style="padding: 8px 16px;">
+          Close Preview
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast for Form Feedback -->
+  <div class="alert-toast" id="toastNotification" role="status" aria-live="polite">
+    <div class="alert-icon">✅</div>
+    <div class="alert-body">
+      <div class="alert-title" id="toastTitle">Request Submitted Successfully</div>
+      <div class="alert-message" id="toastMessage">Your request has been prioritized and added to the community queue.</div>
+    </div>
+    <button type="button" class="alert-close" id="toastCloseBtn" aria-label="Close notification">&times;</button>
+  </div>
+
+  <!-- Public Service Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main-grid">
+        <!-- Brand & Mission Column -->
+        <div class="footer-col footer-col-brand">
+          <div class="footer-logo-wrap">
+            <div class="footer-brand-icon">CP</div>
+            <span class="footer-brand-title">CivicPulse <span>AI</span></span>
+          </div>
+          <p class="footer-brand-desc">
+            Civic reporting and decision-support portal connecting citizen submissions to live Supabase dashboards, transparent priority scoring, issue grouping, demand hotspots, and recommended municipal actions.
+          </p>
+          <div class="footer-track-pill">
+            <span>🏛️</span> CivicPulse AI &bull; Live community reporting platform
+          </div>
+        </div>
+
+        <!-- Core Platform Capabilities Column -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Core Capabilities</h4>
+          <ul class="footer-feature-list">
+            <li><span>🗣️</span> Citizen submissions saved to Supabase</li>
+            <li><span>🌐</span> Multilingual text input and voice notes</li>
+            <li><span>🧩</span> Grouped issues with community support counts</li>
+            <li><span>🔥</span> Live demand hotspot analysis</li>
+            <li><span>🤖</span> Context-aware recommended actions</li>
+          </ul>
+        </div>
+
+        <!-- Navigation Column -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Quick Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#home" class="footer-link">Home / Overview</a></li>
+            <li><a href="#report" class="footer-link">Submit a Request</a></li>
+            <li><a href="#dashboard" class="footer-link">Live Dashboard &amp; Context</a></li>
+            <li><a href="#issues-list" class="footer-link">Priority Issues &amp; Grouping</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Illustrative Data Disclaimer Bar -->
+      <div class="footer-disclaimer-box">
+        <span class="disclaimer-icon">⚠️</span>
+        <span class="disclaimer-text">
+          <strong>Data Notice:</strong> Report counts, locations, priorities, affected people, and statuses are loaded from Supabase. Area population, infrastructure, vulnerability, risk context, and planned-investment details are illustrative only, may show <em>Not Available</em>, and do not represent official government records.
+        </span>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <div class="footer-copy">&copy; 2026 CivicPulse AI. Developed for Hackathon Track 1 Challenge.</div>
+        <div class="footer-tagline">Transparent &bull; Responsive &bull; Public Good</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts: Data first, then interactive application logic -->
+   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+   <script src="js/supabase.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/developmentContext.js"></script>
+  <script src="js/hotspotAnalysis.js"></script>
+  <script src="js/aiRecommendedActions.js"></script>
+  <script src="js/app.js?v=20260918-2"></script>
+</body>
+</html>
