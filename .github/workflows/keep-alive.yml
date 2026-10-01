@@ -1,0 +1,15 @@
+name: Keep Supabase Alive
+
+on:
+  schedule:
+    - cron: '0 0 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping CivicPulse App
+        run: |
+          curl -s https://civicpulseai-psi.vercel.app/ > /dev/null
+          echo "Pinged at $(date)"
